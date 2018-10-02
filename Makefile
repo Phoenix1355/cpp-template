@@ -6,34 +6,43 @@
 # @version	0.8
 # -------------------------------------- #
 
+# Making for release (default)
+# > make
+CXXFLAGS		=-O2 -I. -I./src
+MODE			=release
+
+# Making for debugging
+# > make DEBUG=1
+ifdef DEBUG
+CXXFLAGS		=-ggdb3 -I. -I./src
+MODE			=debug
+endif
+
 # -------------------------------------- #
 # Variables
 # -------------------------------------- #
+# Executables
+EXE				=main
+GTEST_EXE		=gtest
 
 # Paths
 SRC_PATH		=src
-BUILD_PATH		=build
-BIN_PATH		=$(BUILD_PATH)/bin
-OBJ_PATH		=$(BUILD_PATH)/obj
-
-# Executables
-TARGET			=$(BIN_PATH)/PROG
+BUILD_PATH		=build/$(MODE)
+BIN_PATH		=bin/$(MODE)
 
 # Files
 SOURCES			=$(shell find $(SRC_PATH) -name '*.cpp' | sort -k 1nr | cut -f2-)
-OBJECTS			=$(SOURCES:$(SRC_PATH)/%.cpp=$(OBJ_PATH)/%.o)
+OBJECTS			=$(SOURCES:$(SRC_PATH)/%.cpp=$(BUILD_PATH)/%.o)
 DEPS			=$(OBJECTS:%.o=%.d)
 CXX				=g++
-CXXFLAGS		=-ggdb -I. -I./src -std=c++1z -stdlib=libc++
+CXXFLAGS		+= -std=c++1z -Wall
+LDFLAGS			=-lpthread
 
 # GoogleTest variables
-GTEST_DIR		=test
-GTEST_TARGET	=$(BIN_PATH)/GTEST
-GTEST_FLAGS		=-g -lgtest -lpthread
-GTEST_SOURCES 	=
-GTEST_UNITS		=gtest_main.cpp HeapUnitTest.cpp
-GTEST_OBJFILES	=$(GTEST_SOURCES:.cpp=.o) $(GTEST_UNITS:.cpp=.o)
-GTEST_OBJECTS	=$(addprefix $(OBJ_PATH)/, $(GTEST_OBJFILES))
+GTEST_PATH		=test
+GTEST_LDFLAGS	=-lgtest -lpthread
+GTEST_SOURCES 	=gtest_main.cpp TemplateUnitTest.cpp
+GTEST_OBJECTS	=$(addprefix $(BUILD_PATH)/, $(GTEST_SOURCES:.cpp=.o))
 GTEST_DEPS		=$(GTEST_OBJECTS:.o=.d)
 
 # -------------------------------------- #
@@ -44,64 +53,77 @@ GTEST_DEPS		=$(GTEST_OBJECTS:.o=.d)
 .PHONY: all clean run gtest
 
 # Default target
-all: ${TARGET}
+all: info ${BIN_PATH}/${EXE}
+
+# Display compilation info
+info:
+	@ echo "Compiling for '${BIN_PATH}/${EXE}' in '${MODE}' mode..."
 
 # -------------------------------------- #
 # Dependencies
 # -------------------------------------- #
-
 # Create dependencies with the proper prerequisites.
-$(OBJ_PATH)/%.d: $(SRC_PATH)/%.cpp
-	@ echo Compiling dependency file $@ using $^
-	@ mkdir -p $(OBJ_PATH)
-	@ $(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $^ > $@
+${BUILD_PATH}/%.d: $(BUILD_PATH) $(SRC_PATH)/%.cpp
+	@ echo "Compiling dependency file '$@' using '"$^"'"
+	@ $(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $(filter-out $<,$^) > $@
 
-$(OBJ_PATH)/%.d: $(GTEST_DIR)/%.cpp
-	@ echo Compiling test dependency file $@ using $^
-	@ mkdir -p $(OBJ_PATH)
-	@ $(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $^ > $@
+${BUILD_PATH}/%.d: $(BUILD_PATH) $(GTEST_PATH)/%.cpp
+	@ echo "Compiling test dependency file '$@' using '"$^"'"
+	@ $(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $(filter-out $<,$^) > $@
 
 # Include all dependencies
+ifneq ($(MAKECMDGOALS),clean)
 -include $(DEPS) $(GTEST_DEPS)
+endif
 
 # -------------------------------------- #
 # Objects
 # -------------------------------------- #
-
-# Compile all object files from the imported dependencies
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.cpp
-	@ echo Compiling test object file $@ using $<
+# Compile all object files from the included dependencies
+${BUILD_PATH}/%.o: $(SRC_PATH)/%.cpp
+	@ echo "Compiling object file $@ using '"$<"'"
 	@ ${CXX} -c -o $@ $< ${CXXFLAGS}
 
-$(OBJ_PATH)/%.o: $(GTEST_DIR)/%.cpp
-	@ echo Compiling test object file $@ using $<
+# Compile all object files for gtest from the inlcuded dependencies
+${BUILD_PATH}/%.o: $(GTEST_PATH)/%.cpp
+	@ echo "Compiling test object file '$@' using '"$<"'"
 	@ ${CXX} -c -o $@ $< ${CXXFLAGS}
+
+# -------------------------------------- #
+# Folders
+# -------------------------------------- #
+${BIN_PATH}:
+	@ mkdir -p $(BIN_PATH)
+
+${BUILD_PATH}:
+	@ mkdir -p $(BUILD_PATH)
 
 # -------------------------------------- #
 # Makefile runnables
 # -------------------------------------- #
-
 # Linking main executable
-${TARGET}: $(DEPS) $(OBJECTS)
-	@ echo Linking ${TARGET}
-	@ mkdir -p $(BIN_PATH)
-	@ ${CXX} -o $@ $(OBJECTS)
+${BIN_PATH}/${EXE}: $(BIN_PATH) $(DEPS) $(OBJECTS)
+	@ echo "Linking '${BIN_PATH}/${EXE}'"
+	@ ${CXX} -o $@ $(OBJECTS) $(LDFLAGS)
+
+# Linking gtest executable
+${BIN_PATH}/${GTEST_EXE}: $(BIN_PATH) $(GTEST_DEPS) $(GTEST_OBJECTS)
+	@ echo "Linking '${BIN_PATH}/${GTEST_EXE}'"
+	@ ${CXX} -o $@ ${GTEST_OBJECTS} ${GTEST_LDFLAGS}
+	@ echo "Running GoogleTest on '${BIN_PATH}/${GTEST_EXE}'"
+	@ ./${BIN_PATH}/${GTEST_EXE}
 
 # Clean all object files and the main target
 clean:
-	@ echo Cleaning ${TARGET}
-	@ rm -f  $(TARGET)
-	@ rm -f  $(GTEST_TARGET)
+	@ echo "Cleaning up files..."
+	@ rm -f  $(EXE)
+	@ rm -f  $(GTEST_EXE)
 	@ rm -rf $(BUILD_PATH)
+	@ rm -rf $(BIN_PATH)
 
 # Runs the main target executable
 run:
-	@ ./${TARGET}
+	@ ./${BIN_PATH}/${EXE}
 
 # Compiles the test files with the required .hpp and .cpp files.
-gtest: $(GTEST_DEPS) $(GTEST_OBJECTS)
-	@ echo Linking ${GTEST_TARGET}
-	@ mkdir -p $(BIN_PATH)
-	@ ${CXX} -o $(GTEST_TARGET) ${GTEST_OBJECTS} ${GTEST_FLAGS}
-	@ echo Running GoogleTest on $(GTEST_TARGET)
-	@ ./${GTEST_TARGET}
+gtest: ${BIN_PATH}/${GTEST_EXE}
