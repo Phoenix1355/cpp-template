@@ -3,7 +3,7 @@
 #
 # @author	Christian H. Bohlbro
 # @date		2018.09.17
-# @version	0.8
+# @version	1.0
 # -------------------------------------- #
 
 # Making for release (default)
