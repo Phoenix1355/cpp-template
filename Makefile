@@ -8,13 +8,13 @@
 
 # Making for release (default)
 # > make
-CXXFLAGS		=-O2 -I. -I./src
+CXXFLAGS		=-O2 -I./src
 MODE			=release
 
 # Making for debugging
 # > make DEBUG=1
 ifdef DEBUG
-CXXFLAGS		=-ggdb3 -I. -I./src
+CXXFLAGS		=-ggdb3 -I./src
 MODE			=debug
 endif
 
