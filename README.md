@@ -11,13 +11,13 @@ This project is mostly for personal use. It's a basic template for compiling and
 The main project can be made using the basic make command:
 
 ```sh
-> make
+$ make
 ```
 
 To enable debugging (ggdb3), use the following:
 
 ```sh
-> make DEBUG=1
+$ make DEBUG=1
 ```
 
 ### GoogleTest
@@ -25,5 +25,5 @@ To enable debugging (ggdb3), use the following:
 To use the googletest integration, the proper files in the test folder must be provided. This often consists of cpp files having the `TEST` functions defined. By including it in the Makefile, the following commands compiles and runs the unittests.
 
 ```sh
-> make gtest
+$ make gtest
 ```
