@@ -4,6 +4,10 @@
 
 This project is mostly for personal use. It's a basic template for compiling and running basic c/c++ code. It also has a basic GoogleTest integration. This feature allows the user to add UnitTest files to the test repository and by including them in the Makefile, they will be compiled and run, providing the test feedback into the console. See below for further usage.
 
+## Prerequisites
+
+For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or where ever it can be installed on other OS.
+
 ## Usage
 
 ### Main
