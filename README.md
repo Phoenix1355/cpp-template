@@ -39,6 +39,12 @@ To enable debugging (ggdb3), use the following:
 $ make DEBUG=1
 ```
 
+To run the program, use the following:
+
+```sh
+$ make run 
+```
+
 ### GoogleTest
 
 To use the googletest integration, the proper files in the test folder must be provided. This often consists of cpp files having the `TEST` functions defined. By including it in the Makefile, the following commands compiles and runs the unittests.
