@@ -33,7 +33,13 @@ $ tar -xzf /tmp/release-1.8.1.tar.gz
 $ mkdir -p /tmp/googletest-release-1.8.1/build
 ```
 
-After that, we can `make` the repository using `cmake`. If you don't have `cmake`, you can install it with homebrew. But first we must cd into the build directory, then we can run `cmake` with some flags.
+After that, we can `make` the repository using `cmake`. If you don't have `cmake`, you can install it with [homebrew](https://brew.sh/) using:
+
+```sh
+$ brew install cmake
+```
+
+To run `cmake` we must first `cd` into the build directory, then we can run `cmake` with some flags.
 
 ```sh
 $ cd /tmp/googletest-release-1.8.1/build
@@ -63,7 +69,7 @@ Finally, we need to add gtest to a directory in `/usr/local/include` so that we 
 ```sh
 $ cd ../../../googletest
 $ mkdir -p /usr/local/include/gtest
-$ cp -r include/gtest $pwd/$path/include/gtest
+$ cp -r include/gtest /usr/local/include/gtest
 ```
 
 ## Usage
@@ -80,6 +86,12 @@ To enable debugging (ggdb3), use the following:
 
 ```sh
 $ make DEBUG=1
+```
+
+To run the programs main target, use the following:
+
+```sh
+$ make run
 ```
 
 ### GoogleTest
