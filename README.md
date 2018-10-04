@@ -63,7 +63,7 @@ $ cp lib*.a /usr/local/lib
 ```sh
 $ cd ../../../googletest
 $ mkdir -p /usr/local/include/gtest
-$ cp -r include/gtest $pwd/$path/include/gtest
+$ cp -r include/gtest /usr/local/include/gtest
 ```
 
 ## Usage
