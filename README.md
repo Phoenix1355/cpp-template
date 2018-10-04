@@ -30,7 +30,7 @@ To install Google Test run the following set of shell commands in your prefered 
   $ cp lib*.a /usr/local/lib
   $ cd ../../../googletest
   $ mkdir -p /usr/local/include/gtest
-  $ cp -r include/gtest $pwd/$path/include/gtest
+  $ cp -r include/gtest /usr/local/include/gtest
 ```
 
 ## Usage
