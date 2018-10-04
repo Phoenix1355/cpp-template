@@ -14,7 +14,7 @@ For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or
 Cmake is required to build the Google Test libraries. 
 Installing it is easy with homebrew:
 ```sh
-brew install cmake
+$ brew install cmake
 ```
 
 To install Google Test run the following set of shell commands in your prefered terminal. 
