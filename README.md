@@ -10,17 +10,17 @@ For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or
 
 ### Installing Google Test
 ```sh
-  curl -fsSL https://github.com/google/googletest/archive/release-1.8.1.tar.gz -o /tmp/release-1.8.1.tar.gz
-  tar -xzf /tmp/release-1.8.1.tar.gz
-  mkdir -p /tmp/googletest-release-1.8.1/build
-  cd /tmp/googletest-release-1.8.1/build
-  cmake -DCMAKE_CXX_COMPILER="c++" -DCMAKE_CXX_FLAGS="-std=c++11 -stdlib=libc++" ../ >/dev/null
-  make -j >/dev/null
-  cd googlemock/gtest
-  cp lib*.a /usr/local/lib
-  cd ../../../googletest
-  mkdir -p /usr/local/include/gtest
-  cp -r include/gtest $pwd/$path/include/gtest
+  $ curl -fsSL https://github.com/google/googletest/archive/release-1.8.1.tar.gz -o /tmp/release-1.8.1.tar.gz
+  $ tar -xzf /tmp/release-1.8.1.tar.gz
+  $ mkdir -p /tmp/googletest-release-1.8.1/build
+  $ cd /tmp/googletest-release-1.8.1/build
+  $ cmake -DCMAKE_CXX_COMPILER="c++" -DCMAKE_CXX_FLAGS="-std=c++11 -stdlib=libc++" ../ >/dev/null
+  $ make -j >/dev/null
+  $ cd googlemock/gtest
+  $ cp lib*.a /usr/local/lib
+  $ cd ../../../googletest
+  $ mkdir -p /usr/local/include/gtest
+  $ cp -r include/gtest $pwd/$path/include/gtest
 ```
 
 ## Usage
