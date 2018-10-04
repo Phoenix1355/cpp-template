@@ -10,6 +10,14 @@ This project is mostly for personal use. It's a basic template for compiling and
 For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or where ever it can be installed on other OS.
 
 #### Installing Google Test on OSX
+**_Cmake_**
+
+Cmake is required to build the Google Test libraries. 
+Installing it is easy with homebrew:
+```sh
+$ brew install cmake
+```
+
 The following will show how to install the GoogleTest library onto your OS X system. This has been tested with GoogleTest version `1.8.1`. Feel free to use the latest version, but I cannot guarantee that this installation guide will work then.
 
 First some system details:
