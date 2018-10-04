@@ -8,7 +8,7 @@ This project is mostly for personal use. It's a basic template for compiling and
 
 For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or where ever it can be installed on other OS.
 
-### Installing Google Test
+### Installing Google Test on OSX
 ```sh
   $ curl -fsSL https://github.com/google/googletest/archive/release-1.8.1.tar.gz -o /tmp/release-1.8.1.tar.gz
   $ tar -xzf /tmp/release-1.8.1.tar.gz
