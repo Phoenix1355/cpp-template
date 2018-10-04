@@ -58,7 +58,7 @@ Copy all library files into `/usr/local/lib` using:
 $ cp lib*.a /usr/local/lib
 ```
 
--Some text that needs to be edited here-
+Finally, we need to add gtest to a directory in `/usr/local/include` so that we can include it and use it in our project.
 
 ```sh
 $ cd ../../../googletest
