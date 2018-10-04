@@ -9,6 +9,16 @@ This project is mostly for personal use. It's a basic template for compiling and
 For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or where ever it can be installed on other OS.
 
 ### Installing Google Test on OSX
+**_Cmake_**
+
+Cmake is required to build the Google Test libraries. 
+Installing it is easy with homebrew:
+```sh
+$ brew install cmake
+```
+
+To install Google Test run the following set of shell commands in your prefered terminal. 
+
 ```sh
   $ curl -fsSL https://github.com/google/googletest/archive/release-1.8.1.tar.gz -o /tmp/release-1.8.1.tar.gz
   $ tar -xzf /tmp/release-1.8.1.tar.gz
@@ -20,7 +30,7 @@ For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or
   $ cp lib*.a /usr/local/lib
   $ cd ../../../googletest
   $ mkdir -p /usr/local/include/gtest
-  $ cp -r include/gtest $pwd/$path/include/gtest
+  $ cp -r include/gtest /usr/local/include/gtest
 ```
 
 ## Usage
@@ -37,6 +47,12 @@ To enable debugging (ggdb3), use the following:
 
 ```sh
 $ make DEBUG=1
+```
+
+To run the program, use the following:
+
+```sh
+$ make run 
 ```
 
 ### GoogleTest
