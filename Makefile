@@ -72,7 +72,7 @@ ${BUILD_PATH}/%.d: $(BUILD_PATH) $(GTEST_PATH)/%.cpp
 	@ $(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $(filter-out $<,$^) > $@
 
 # Include all dependencies
-ifneq ($(MAKECMDGOALS),clean)
+ifneq ($(MAKECMDGOALS),$(filter $(MAKECMDGOALS),clean run))
 -include $(DEPS) $(GTEST_DEPS)
 endif
 
