@@ -1,13 +1,13 @@
-# c++ Template
+# C++ Template
 
 ## Introduction
 
-This project is mostly for personal use. It's a basic template for compiling and running basic c/c++ code. It also has a basic GoogleTest integration. This feature allows the user to add UnitTest files to the test repository and by including them in the Makefile, they will be compiled and run, providing the test feedback into the console. See below for further usage.
+This project is mostly for personal use. It's a basic template for compiling and running basic C/C++ code. It also has a basic GoogleTest integration. This feature allows the user to add UnitTest files to the test repository and by including them in the Makefile, they will be compiled and run, providing the test feedback into the console. See below for further usage.
 
 ## Prerequisites
 
 ### GoogleTest
-For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or where ever it can be installed on other OS.
+For this to work, GoogleTest must be installed to `/usr/local/include` on OSX or wherever it can be installed on other OS.
 
 #### Installing Google Test on OSX
 The following will show how to install the GoogleTest library onto your OS X system. This has been tested with GoogleTest version `1.8.1`. Feel free to use the latest version, but I cannot guarantee that this installation guide will work then.
@@ -76,7 +76,7 @@ $ cp -r include/gtest /usr/local/include/gtest
 
 ### Main
 
-The main project can be made using the basic make command:
+The main project can be made using the basic `make` command:
 
 ```sh
 $ make
